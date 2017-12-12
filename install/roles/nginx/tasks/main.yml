@@ -36,7 +36,7 @@
 - name: Installing Python Pexpect
   apt:
     name: python-pexpect
-    update_cache: yes
+   # update_cache: yes
 # Writes the create user script in the temp directory
 - name: Create kibana admin user
   template:
