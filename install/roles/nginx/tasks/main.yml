@@ -20,7 +20,7 @@
     owner=root
     group=root
     mode=0644
-    register: nginx_needs_restart
+  register: nginx_needs_restart
 # Enable nginx service
 - name: Enabling Nginx service
   systemd:
