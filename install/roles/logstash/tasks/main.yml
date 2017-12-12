@@ -11,7 +11,7 @@
 - name: Update repositories cache and install Logstash
   apt:
     name: logstash
-    update_cache: yes
+    #update_cache: yes
 # Creating certs directories for SSL
 - name: Creates SSL directories
   file:
