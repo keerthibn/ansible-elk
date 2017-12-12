@@ -50,7 +50,7 @@
   expect:
     command: bash /tmp/createUser
     responses:
-    'Password:' : "{{kibana_password}}"
+       'Password:' : "{{kibana_password}}"
 # Restart Nginx service
 - name: Restart Nginx service
   systemd:
