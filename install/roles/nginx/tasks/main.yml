@@ -49,7 +49,7 @@
 - name: Create Kibana admin user
   expect:
     command: bash /tmp/createUser
-  responses:
+    responses:
     'Password:' : "{{kibana_password}}"
 # Restart Nginx service
 - name: Restart Nginx service
