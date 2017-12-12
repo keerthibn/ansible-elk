@@ -1,17 +1,55 @@
+# tasks file for oracle-java
 ---
-#
-# Installing Java 8
-#
-# Add the Java ppa repository
-- name: Add Java repository
-apt_repository:
-repo: ppa:webupd8team/java
-# Automatically accepts the Oracle License popup in the terminal
-- name: Automatically select the Oracle License
-shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-# Install Java 8
-- name: Install the Java 8 package
-apt:
-name: oracle-java8-installer
-state: present
-update_cache: yes
+- name: add repository from PPA and install its signing key
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+    update_cache: true
+  tags:
+    - configuration
+    - oracle-java
+    - oracle-java-add-repository
+
+- name: configure debconf
+  debconf:
+    name: "oracle-java8-installer"
+    question: "shared/accepted-oracle-license-v1-1"
+    value: "true"
+    vtype: "select"
+  with_items: 8
+  tags:
+    - configuration
+    - oracle-java
+    - oracle-java-install
+
+- name: install (latest)
+  apt:
+    name: "oracle-java8-installer"
+    state: "{{ apt_install_state | default('latest') }}"
+  with_items: 8
+  when: item.update_version is undefined
+  tags:
+    - configuration
+    - oracle-java
+    - oracle-java-install
+
+- name: install (update)
+  apt:
+    name: "oracle-java8-installer={{ item.update_version}}"
+    state: present
+  with_items: 8
+  when: item.update_version is defined
+  tags:
+    - configuration
+    - oracle-java
+    - oracle-java-install
+
+- name: set environment variables
+  apt:
+    name: "oracle-java8-set-default"
+    state: "{{ apt_install_state | default('latest') }}"
+  with_items: 8
+  when: item.set_as_default is defined and item.set_as_default
+  tags:
+    - configuration
+    - oracle-java
+    - oracle-java-set-environment
