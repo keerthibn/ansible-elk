@@ -11,5 +11,5 @@
     - { role: elasticsearch }
     - { role: kibana }
     - { role: nginx }
-    - { role: logstash }
-    - { role: metricbeat }
+    #- { role: logstash }
+    #- { role: metricbeat }
